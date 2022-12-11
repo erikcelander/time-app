@@ -1,0 +1,21 @@
+{
+  "name": "time-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erikcelander/time-app.git"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erikcelander/time-app/issues"
+  },
+  "homepage": "https://github.com/erikcelander/time-app#readme"
+}
