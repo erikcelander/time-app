@@ -4,10 +4,12 @@ const template = document.createElement('template')
 template.innerHTML = `
    <style>
     .container {
+      width: 100%;
+      height: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: space-evenly;
       align-items: center;
-      margin-top: 100px;
+  
     }
 
     .box {
@@ -15,16 +17,23 @@ template.innerHTML = `
       height: 600px;
       border: 1px solid black;
     }
+
+    .timer {
+      font-size: 36px;
+      font-weight: 500;
+    }
     
   </style>
 
   <div class="container">
-    <button class="start">start</button>
-    <button class="stop" disabled="true">stop</button>
-    <button class="reset" disabled="true">reset</button>
-    <button class="save">save</button>
     <div class="timer">
       0
+    </div>
+    <div class="btn-grp">
+      <button class="time-btn start">start</button>
+      <button class="time-btn stop" disabled="true">stop</button>
+      <button class="time-btn reset" disabled="true">reset</button>
+      <button class="time-btn save">save</button>
     </div>
   </div>
 `

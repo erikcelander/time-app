@@ -16,7 +16,9 @@ template.innerHTML = `
     .box {
       width: 700px;
       height: 600px;
-      border: 1px solid black;
+      background: #21295C;
+      border-radius: 5%;
+      color: white;
     }
     
   </style>
