@@ -19,8 +19,15 @@ template.innerHTML = `
     }
 
     .timer {
-      font-size: 36px;
+      font-size: 42px;
       font-weight: 500;
+    }
+
+    .btn-grp {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(100px, 2fr));
+      grid-template-rows: repeat(2, minmax(50px, 2fr));
+      gap: 5px;
     }
     
   </style>
@@ -33,7 +40,7 @@ template.innerHTML = `
       <button class="time-btn start">start</button>
       <button class="time-btn stop" disabled="true">stop</button>
       <button class="time-btn reset" disabled="true">reset</button>
-      <button class="time-btn save">save</button>
+      <button class="time-btn save" disabled="true">save</button>
     </div>
   </div>
 `
@@ -63,19 +70,27 @@ customElements.define('timer-clock',
       this.#startButton.addEventListener('click', () => {
         this.#timeTracker.startTimer()
           setInterval(() => {
-            this.#currentTimeDiv.textContent = `${this.#timeTracker.getCurrentTime().seconds}`
-          }, 1000)
+            const currentTime = this.#timeTracker.getCurrentTime()
+            if (currentTime.minutes === 0) {
+              this.#currentTimeDiv.textContent = `${currentTime.seconds}`
+            } else if (currentTime.minutes > 0 && currentTime.hours < 1) {
+              this.#currentTimeDiv.textContent = `${currentTime.minutes}m ${currentTime.seconds}s`
+            } else if (currentTime.hours > 0) {
+              this.#currentTimeDiv.textContent = `${currentTime.hours}h ${currentTime.minutes}m ${currentTime.seconds}s`
+            }
+          }, 100)
         
         this.#startButton.setAttribute('disabled', true)
         this.#stopButton.removeAttribute('disabled')
         this.#resetButton.removeAttribute('disabled')
-
+        this.#saveButton.setAttribute('disabled', true)
       })
 
       this.#stopButton.addEventListener('click', () => {
         this.#timeTracker.stopTimer()
         this.#startButton.removeAttribute('disabled')
         this.#stopButton.setAttribute('disabled', true)
+        this.#saveButton.removeAttribute('disabled')
       })
 
       this.#resetButton.addEventListener('click', () => {
@@ -83,6 +98,7 @@ customElements.define('timer-clock',
         this.#startButton.removeAttribute('disabled')
         this.#stopButton.setAttribute('disabled', true)
         this.#resetButton.setAttribute('disabled', true)
+        this.#saveButton.setAttribute('disabled', true)
       })
 
       
