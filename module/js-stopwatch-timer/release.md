@@ -1,0 +1,77 @@
+# Mall för inlämning laboration 1, 1dv610
+
+## Checklista
+  - [x] Jag har skrivit all kod och reflektioner själv. Jag har inte använt mig av andras kod för att lösa uppgiften.
+  - [x] Mina testresultat är skrivna utifrån utförd testning ( och inte teoretiskt: "det bör fungera" :) )
+  - [x] Koden är objektorienterad
+  - [x] Jag har skrivit en modul som riktar sig till programmerare
+
+## Egenskattning och mål
+  - [x] Jag är inte klar eftersom jag vet att jag saknar något. (Då skall du inte lämna in! Lämna då istället in på restlaboration.)
+  - [x] Jag eftersträvar med denna inlämning godkänt betyg (E-D)
+    - [x] De flesta testfall fungerar
+    - [x] Koden är förberedd på Återanvändning
+    - [x] All kod samt historik finns i git 
+    - [x] Kodkvaliterskraven är ifyllda
+    - [x] Reflektion är skriven utifrån bokens kapitel 
+  - [ ] Jag eftersträvar med denna inlämning högre betyg (C-B) och anser mig uppfylla alla extra krav för detta. 
+    - [x] Samtliga testfall är skrivna    
+    - [ ] Testfall är automatiserade
+    - [ ] Det finns en tydlig beskrivning i hur modulen skall användas (i git)
+    - [ ] Kodkvalitetskraven är varierade 
+  - [ ] Jag eftersträvar med denna inlämning högsta betyg (A) 
+
+Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser. 
+
+## Återanvändning
+I [README.md](https://github.com/erikcelander/js-stopwatch-timer/blob/main/README.md) filem så finns det instruktioner på hur man kan använda moduler och även förklaringar för de publika metoderna.
+
+## Beskrivning av min kod
+I [README.md](https://github.com/erikcelander/js-stopwatch-timer/blob/main/README.md) så finns det information om de viktigaste metoderna i min modul.
+
+## Hur jag testat
+
+Finns beskrivet i [test-report.md](https://github.com/erikcelander/js-stopwatch-timer/blob/main/test-report.md).
+
+
+### Testfall
+
+Finns i [test-report.md](https://github.com/erikcelander/js-stopwatch-timer/blob/main/test-report.md).
+
+
+## Kodkvalitetskrav
+
+### Namngivning
+
+| Namn och förklaring                                                                    | Reflektion                                                                                                                                                                                                                                                                       |
+|----------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| start – metod som startar timer                                                        | **Method names** – Metoder bör ha verb eller verb-fras namn. Start är ett passande namn. Möjligtvis startTimer hade varit tydligare. **Use Intention-Revealing Names** – Det är tydligt vad metoden gör och vad den inte gör.                                                    |
+| reset – metod som nollställer timern                                                   | **Method names** – Metoder bör ha verb eller verb-fras namn. Igen så är reset passande och resetTimer hade kanske varit tydligare. **Use Intention-Revealing Names** – Även här är det tydligt vad metoden gör och vad den inte gör.                                             |
+| stop – metod som stannar timern.                                                       | Även här följs reglerna för method names samt **Use Intention-Revealing** Names.   Jag anser att jag följer bokens regler när det gäller **Don’t Be Cute, Don’t Pun och Don’t Add Gratuitous Context** genom att inte göra mer utav namnen när det inte behövs.                  |
+| countdown (seconds) – metod som tar antal sekunder som parameter och räknar ner till 0 | **Method names** – to countdown är ju något man gör. Här följer jag standarden att metoder bör ha verb namn.   **Use Intention-Revealing Names och Add Meaningful Context** – möjligt att secondsCountdown eller countdownSeconds hade gjort det tydligare hur metoden fungerar. |
+| lap – returnerar tiden som timern har just nu.                                         | **Method names** – getLapTime hade mer följt standarden att accessors bör börja med get och **Use Intention-Revealing Names** – gjort det tydligare att metoden returnerar något.                                                                                                |
+
+### Funktioner
+
+
+| Kod                                                                                                                                                                                                                                                                                | Antal rader | Reflektion                                                                                                                                                                              |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  ``` start = () => {     try { this.#setTimer(this.#addSecondToTimer, 1000)     } catch (error) {    	 console.log(error.message)     }   }  ```                                                                                                                                    | 5           | Small – Jag har gjort metoden så liten som möjligt.   Do one thing – Jag har gjort så att metoden gör så lite som möjligt.   Verbs and Keywords – ett enkelt och tydligt verb namn      |
+| ``` reset = () => {     this.stop()     this.#setSeconds(0)     this.#setMinutes(0)     this.#setHours(0)     this.#setDays(0)   } ```                                                                                                                                             | 5           | Do one thing – Denna metoden nollställer timern och inget annat.                                                                                                                        |
+| ``` stop = () => { 	 clearInterval(this.#getTimer())   } ```                                                                                                                                                                                                                        | 1           | Small, do one thing, commans query separation – Metoder bör vara små, göra en sak och antingen göra något eller svara på något men inte båda två. Här följer jag alla dessa tre regler. |
+| ``` countdown = (seconds) => {     this.reset()     if (this.#isPositiveInteger(seconds)) {    	 this.#setSeconds(seconds) this.#setTimer(this.#removeSecondFromTimer, 1000)     } else {    	 throw new Error('Seconds to countdown needs to be a positive integer.')     }   } ``` | 6           | Small – Metoden skulle kunna bli lite mindre och lite funktionalitet hade kunnat brytas ut.  Common Monadic Form – metoden tar bara ett argument.                                       |
+| ``` lap = () => {     const lap = {  	seconds: this.#getSeconds(),  	minutes: this.#getMinutes(),  	hours: this.#getHours(),  	days: this.#getDays()    }    return lap  }  ```                                                                                                        | 7           | Small, do one thing – Metoden blir inte mindre än såhär om jag inte direkt i returneringen skapar ett objekt men då anser jag att man tappar lite i läsförståelsen.                     |
+
+## Laborationsreflektion
+
+# Reflektion
+
+Jag har hittills under denna kursens gång under föreläsningar och på workshop:en fått en mycket tydlig insikt i att kod jag tidigare skrivit i andra kurser och projekt kan anses, eller rättare sagt, anses vara ”dålig” kod utifrån ett par olika perspektiv så som läsbarhet och hur lätt det är att förstå för någon annan som läser. 
+
+I mina tidigare kurser eller projekt så har jag haft i åtanke att det är en lärare, någon som ska bedöma mig utifrån det jag skrivit, som ska läsa och förstå min kod, vilket har gjort att jag har kunnat göra en del antaganden som jag  i detta projekt avstått från att göra då jag nu även ska ha i åtanke att även en programmerare av okänd skicklighet ska kunna läsa och förstå min kod. Detta kan vara t.ex. att jag antagit att jag inte behöver förklara något som jag anser vara jättetydligt då personen som ska titta på koden senare har gett mig problembeskrivningen, något jag då inte kunnat göra i detta projekt. 
+
+I mina tidigare kurser så har jag fått instruktionen om att all kod ska dokumenteras tydligt på ett sätt som boken i denna kurs menar är/kan vara onödigt/redundant, bloated eller ’noise’. Givetvis håller jag med boken om att många kommentarer i många fall inte behöver existera och blir bara mer innehåll för ögat att läsa utan att faktiskt tillföra något, varpå jag valde att endast smått kommentera de publika metoderna.
+
+Jag har tidigare haft en förkärlek för one-liners, speciellt the ternary operator ? : som jag då tyckte var väldigt ”snygg” kod men på vår första workshop under parprogrammeringen så skrev personen jag programmerade med en sådan som tog mig mer tid att förstå än vad han sparade in genom att inte skriva ut hela uttrycket så tydligt som möjligt. I detta ögonblick så kändes det som att jag verkligen insåg vikten (och även innebörden) av kodkvalitet. 
+
+
