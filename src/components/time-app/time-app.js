@@ -27,6 +27,9 @@ template.innerHTML = `
     <div class="box">
       <timer-clock class="timer"></timer-clock>
       <time-form class="form"></time-form>
+      <div class="test">
+        testernio
+      </div>
     </div>
   </div>
 `
@@ -37,6 +40,7 @@ customElements.define('time-app',
   
     #timerComponent
     #timerFormComponent
+    #test
 
 
     constructor () {
@@ -47,22 +51,29 @@ customElements.define('time-app',
 
       this.#timerComponent = this.shadowRoot.querySelector('.timer')
       this.#timerFormComponent = this.shadowRoot.querySelector('.form')
+      
 
       this.#timerComponent.addEventListener('saveBtnPressed', (e) => {
-        this.#timerFormComponent.saveTrackedTime(e.detail)
+        this.#timerFormComponent.displayTimeForm(e.detail)
       })
 
-      this.#timerFormComponent.addEventListener('savedTime', (e) => {
-        const newTrackedTime = e.detail
-        console.log(newTrackedTime)
-      })
+  
 
-
+      this.#test = this.shadowRoot.querySelector('.test')
 
       
 
 
 
+    }
+
+    connectedCallback () {
+      
+      if (window.localStorage.getItem('savedTrackedTimes') === null) {
+        this.#test.textContent = 'no saved times'
+      } else {
+        this.#test.textContent = JSON.parse(window.localStorage.getItem('savedTrackedTimes'))[0].title
+      }
     }
 
     

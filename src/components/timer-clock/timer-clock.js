@@ -9,7 +9,6 @@ template.innerHTML = `
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-  
     }
 
     .box {

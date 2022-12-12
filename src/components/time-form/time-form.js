@@ -25,6 +25,7 @@ customElements.define('time-form',
     #container
     #newTrackedTime
     #textarea
+    #savedTimes
   
     constructor () {
       super()
@@ -45,50 +46,34 @@ customElements.define('time-form',
         }
       })
 
+
+      if (window.localStorage.getItem('savedTrackedTimes') === null) {
+        this.#savedTimes = []
+      } else {
+        this.#savedTimes = JSON.parse(window.localStorage.getItem('savedTrackedTimes'))
+      }
     }
 
-    saveTrackedTime (time) {
+    displayTimeForm (time) {
       this.#container.classList.remove('hidden')
-
       this.#newTrackedTime = time
-      console.log(this.#newTrackedTime)
     }
 
     #submit = () => {
-
-      /*const cEvent = new CustomEvent('saveTime', {detail: this.#textarea.value})
-      this.dispatchEvent(cEvent)*/ 
-
-      /*this.#textarea.value
-      this.dispatchEvent(new CustomEvent('formsubmit'))*/ 
 
       if (this.#textarea.value.length > 2) {
 
         const title = this.#textarea.value
         const date = new Date().toISOString().slice(0, 10)
-        const savedTrackedTime = new TrackedTime(title, this.#newTrackedTime, date)
-        this.dispatchEvent(new CustomEvent('savedTime', {detail: savedTrackedTime}))        
+        const trackedTime = new TrackedTime(title, this.#newTrackedTime, date)    
         
-        /*let timeArray = window.localStorage.getItem('savedTrackedTimes')
-
-        if(timeArray === null) {
-          timeArray = []
-          timeArray.push(this.#newTrackedTime)
-          window.localStorage.setItem('savedTrackedTimes', JSON.stringify(timeArray))
-        } else {
-          timeArray = JSON.parse(timeArray)
-          timeArray.push(this.#newTrackedTime)
-          window.localStorage.removeItem('savedTreackedTimes')
-          window.localStorage.setItem('savedTrackedTimes', JSON.stringify(timeArray))
-        }
-
-        console.log(timeArray)*/ 
+        this.#savedTimes.push(trackedTime)
+        window.localStorage.setItem('savedTrackedTimes', JSON.stringify(this.#savedTimes))
+        this.#container.classList.add('hidden')
 
       } else {
-        alert('Your title needs to be 3 or more characters.')
+        alert('Your title needs to be at least 3 characters.')
       } 
     }
-
-
   }
 )
