@@ -19,6 +19,18 @@ template.innerHTML = `
       background: #21295C;
       border-radius: 5%;
       color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timer {
+      flex-grow: 1;
+    }
+
+    .form {
+      margin-left: 325px;
+      margin-top: 350px;
+      position: absolute;
     }
     
   </style>
@@ -27,9 +39,7 @@ template.innerHTML = `
     <div class="box">
       <timer-clock class="timer"></timer-clock>
       <time-form class="form"></time-form>
-      <div class="test">
-        testernio
-      </div>
+
     </div>
   </div>
 `
@@ -57,9 +67,9 @@ customElements.define('time-app',
         this.#timerFormComponent.displayTimeForm(e.detail)
       })
 
-  
-
-      this.#test = this.shadowRoot.querySelector('.test')
+      this.#timerFormComponent.addEventListener('submitBtnPressed', (e) => {
+        this.#timerComponent.saveTrackedTime(e.detail)
+      })
 
       
 

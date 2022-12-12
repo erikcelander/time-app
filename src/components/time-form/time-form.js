@@ -7,13 +7,46 @@ template.innerHTML = `
       display: none;
     }
     
+    textarea {
+      resize: none;
+      width: 70%;
+    }
+    textarea:focus {
+      outline: none;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .input-div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    input {
+      width: 25%;
+      border-radius:5px;
+      border: none;
+      height: 22px;
+      background: #3083DC;
+      color: white;
+    }
+
   </style>
 
   <div class="container hidden">
     <form >
       <div class="text"><p>Pick a title</p></div>
-      <textarea rows="1" spellcheck="false"> </textarea>
-      <input type="submit" value="Submit" class="submit">
+      <div class="input-div">
+        <textarea rows="1" spellcheck="false"> </textarea>
+        <input type="submit" value="Submit" class="submit">
+      </div>
     </form>
   </div>
 `
