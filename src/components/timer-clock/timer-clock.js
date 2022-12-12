@@ -15,6 +15,9 @@ template.innerHTML = `
       width: 700px;
       height: 600px;
       border: 1px solid black;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
     }
 
     .timer {
@@ -98,15 +101,11 @@ customElements.define('timer-clock',
         this.#stopButton.setAttribute('disabled', true)
         this.#resetButton.setAttribute('disabled', true)
         this.#saveButton.setAttribute('disabled', true)
+        this.dispatchEvent(new CustomEvent('resetBtnPressed'))
+
       })
 
-      
-      /*this.#saveButton.addEventListener('click', () => {
-        const currentTime = this.#timer.lap()
-
-        console.log(currentTime.seconds)
-        localStorage.setItem('time', currentTime.seconds)
-      })*/
+  
 
       this.#saveButton.addEventListener('click', () => {
         this.dispatchEvent(new CustomEvent('saveBtnPressed', {detail: this.#timeTracker.getCurrentTime()}))

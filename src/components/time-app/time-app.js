@@ -14,8 +14,9 @@ template.innerHTML = `
     }
 
     .box {
-      width: 700px;
-      height: 600px;
+
+      width: 100vh;
+      height: 60vh;
       background: #21295C;
       border-radius: 5%;
       color: white;
@@ -28,8 +29,8 @@ template.innerHTML = `
     }
 
     .form {
-      margin-left: 325px;
-      margin-top: 350px;
+      margin-left: 43vh;
+      margin-top: 38vh;
       position: absolute;
     }
     
@@ -67,8 +68,8 @@ customElements.define('time-app',
         this.#timerFormComponent.displayTimeForm(e.detail)
       })
 
-      this.#timerFormComponent.addEventListener('submitBtnPressed', (e) => {
-        this.#timerComponent.saveTrackedTime(e.detail)
+      this.#timerComponent.addEventListener('resetBtnPressed', (e) => {
+        this.#timerFormComponent.hideTimeForm()
       })
 
       
@@ -76,16 +77,5 @@ customElements.define('time-app',
 
 
     }
-
-    connectedCallback () {
-      
-      if (window.localStorage.getItem('savedTrackedTimes') === null) {
-        this.#test.textContent = 'no saved times'
-      } else {
-        this.#test.textContent = JSON.parse(window.localStorage.getItem('savedTrackedTimes'))[0].title
-      }
-    }
-
-    
   }
 )

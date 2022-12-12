@@ -92,6 +92,10 @@ customElements.define('time-form',
       this.#newTrackedTime = time
     }
 
+    hideTimeForm() {
+      this.#container.classList.add('hidden')
+    }
+
     #submit = () => {
 
       if (this.#textarea.value.length > 2) {
@@ -103,6 +107,7 @@ customElements.define('time-form',
         this.#savedTimes.push(trackedTime)
         window.localStorage.setItem('savedTrackedTimes', JSON.stringify(this.#savedTimes))
         this.#container.classList.add('hidden')
+        this.#textarea.value = ''
 
       } else {
         alert('Your title needs to be at least 3 characters.')
