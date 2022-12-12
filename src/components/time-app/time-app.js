@@ -1,5 +1,6 @@
 import '../timer-clock/timer-clock.js'
 import '../time-form/time-form.js'
+import '../time-list/time-list.js'
 
 
 
@@ -38,20 +39,20 @@ template.innerHTML = `
 
   <div class="container">
     <div class="box">
-      <timer-clock class="timer"></timer-clock>
-      <time-form class="form"></time-form>
-
+      <time-list></time-list>
     </div>
   </div>
 `
-
+/*
+     <timer-clock class="timer"></timer-clock>
+      <time-form class="form"></time-form>
+*/
 customElements.define('time-app',
 
   class extends HTMLElement {
   
     #timerComponent
     #timerFormComponent
-    #test
 
 
     constructor () {
@@ -62,7 +63,7 @@ customElements.define('time-app',
 
       this.#timerComponent = this.shadowRoot.querySelector('.timer')
       this.#timerFormComponent = this.shadowRoot.querySelector('.form')
-      
+      /*
 
       this.#timerComponent.addEventListener('saveBtnPressed', (e) => {
         this.#timerFormComponent.displayTimeForm(e.detail)
@@ -71,7 +72,7 @@ customElements.define('time-app',
       this.#timerComponent.addEventListener('resetBtnPressed', (e) => {
         this.#timerFormComponent.hideTimeForm()
       })
-
+*/
       
 
 
