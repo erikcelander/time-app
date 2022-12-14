@@ -82,38 +82,48 @@ customElements.define('time-list',
       while (this.#thead.nextElementSibling) {
         this.#thead.nextElementSibling.remove()
       }
-      
+
       this.#times = JSON.parse(window.localStorage.getItem('savedTrackedTimes'))
   
   
       if (this.#times !== null) {
 
         this.#times.forEach(time => {
-        
-          const timeRow = document.createElement('tr')
-        
-      
-          const titleCell = document.createElement('td')
-          titleCell.textContent = time.title
-          const durationCell = document.createElement('td')
-          if (time.duration.minutes === 0) {
-            durationCell.textContent = `${time.duration.seconds}s`
-          } else if (time.duration.hours === 0 && time.duration.minutes !== 0) {
-            durationCell.textContent = `${time.duration.minutes}m ${time.duration.seconds}s`
-          } else {
-            durationCell.textContent = `${time.duration.hours}h ${time.duration.minutes}m ${time.duration.seconds}s`
-          }
-
-          const dateCell = document.createElement('td')
-          dateCell.textContent = time.date
-
-          timeRow.appendChild(titleCell)
-          timeRow.appendChild(durationCell)
-          timeRow.appendChild(dateCell)
+          const cells = this.createTableCells(time)
+          const timeRow = this.createTimeRow(cells)
 
           this.#table.appendChild(timeRow)
         })
       }
+    }
+
+    createTableCells(time) {
+      const titleCell = document.createElement('td')
+      titleCell.textContent = time.title
+      const durationCell = document.createElement('td')
+      if (time.duration.minutes === 0) {
+        durationCell.textContent = `${time.duration.seconds}s`
+      } else if (time.duration.hours === 0 && time.duration.minutes !== 0) {
+        durationCell.textContent = `${time.duration.minutes}m ${time.duration.seconds}s`
+      } else {
+        durationCell.textContent = `${time.duration.hours}h ${time.duration.minutes}m ${time.duration.seconds}s`
+      }
+
+      const dateCell = document.createElement('td')
+      dateCell.textContent = time.date
+
+      return [titleCell, durationCell, dateCell]
+    }
+
+
+    createTimeRow(cells) {
+      const timeRow = document.createElement('tr')
+
+      cells.forEach(cell => {
+        timeRow.appendChild(cell)
+      })
+  
+      return timeRow
     }
   }
 )

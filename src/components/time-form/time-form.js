@@ -103,7 +103,7 @@ customElements.define('time-form',
         const title = this.#textarea.value
         const date = new Date().toISOString().slice(0, 10)
         const trackedTime = new TrackedTime(title, this.#newTrackedTime, date)    
-        console.log(trackedTime)
+
         this.#savedTimes.push(trackedTime)
         window.localStorage.setItem('savedTrackedTimes', JSON.stringify(this.#savedTimes))
         this.#container.classList.add('hidden')

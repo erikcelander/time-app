@@ -109,18 +109,25 @@ customElements.define('time-app',
       })
 
       this.#switchButton.addEventListener('click', (e) => {
-        this.#timeListComponent.render()
         if (this.#timeListComponent.classList.contains('hidden')) {
-          this.#switchButton.textContent = 'View timer'
-          this.#timerComponent.classList.add('hidden')
-          this.#timeListComponent.classList.remove('hidden')
-          
+          this.displayTimeList()
         } else {
-          this.#switchButton.textContent = 'View saved times'
-          this.#timerComponent.classList.remove('hidden')
-          this.#timeListComponent.classList.add('hidden')
+          this.displayTimer()
         }
       })
+    }
+
+    displayTimeList() {
+      this.#timeListComponent.render()
+      this.#switchButton.textContent = 'View timer'
+      this.#timerComponent.classList.add('hidden')
+      this.#timeListComponent.classList.remove('hidden')
+    }
+
+    displayTimer()  {
+      this.#switchButton.textContent = 'View saved times'
+      this.#timerComponent.classList.remove('hidden')
+      this.#timeListComponent.classList.add('hidden')
     }
   }
 )
