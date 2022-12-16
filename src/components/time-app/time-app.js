@@ -12,7 +12,7 @@ template.innerHTML = `
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      margin-top: 100px;
+      margin-top: 60px;
     }
 
     .box {
@@ -51,7 +51,7 @@ template.innerHTML = `
     }
 
     .switch-btn {
-      width: fit-content;
+      width: 195px;
       height: 35px;
       font-size: 24px;
       text-align: center;
@@ -70,7 +70,7 @@ template.innerHTML = `
   <div class="container">
     <div class="box">
       <div class="button-box">
-        <button class="switch-btn">View saved times</button>
+        <button class="switch-btn">View times</button>
 
       </div>
 
@@ -133,7 +133,7 @@ customElements.define('time-app',
     }
 
     displayTimer()  {
-      this.#switchButton.textContent = 'View saved times'
+      this.#switchButton.textContent = 'View times'
       this.#timerComponent.classList.remove('hidden')
       this.#timeListComponent.classList.add('hidden')
     }
