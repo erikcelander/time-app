@@ -11,6 +11,7 @@ template.innerHTML = `
       resize: none;
       width: 70%;
     }
+    
     textarea:focus {
       outline: none;
     }
@@ -109,9 +110,15 @@ customElements.define('time-form',
         this.#container.classList.add('hidden')
         this.#textarea.value = ''
 
+        
+
       } else {
         alert('Your title needs to be at least 3 characters.')
       } 
+    }
+
+    clearSavedTimesArray() {
+      this.#savedTimes = []
     }
   }
 )

@@ -20,7 +20,7 @@ template.innerHTML = `
       width: 100vh;
       height: fit-content;
       background: #21295C;
-      border-radius: 5%;
+      border-radius: 25px;
       color: white;
       display: flex;
       flex-direction: column;
@@ -28,19 +28,19 @@ template.innerHTML = `
 
     .timer {
       flex-grow: 1;
-      padding: 200px 0 200px 0;
+      padding: 75px 0 130px 0;
     }
 
     .form {
       margin-left: 43vh;
-      margin-top: 38vh;
+      margin-top: 36vh;
       position: absolute;
     }
 
     .time-list {
       width: 100%;
       height: 100%;
-      padding: 175px 0 175px 0;
+      padding: 75px 0 130px 0;
     }
 
     .button-box {
@@ -59,6 +59,10 @@ template.innerHTML = `
 
     .hidden {
       display: none;
+    }
+
+    button {
+      cursor: pointer;
     }
     
   </style>
@@ -114,6 +118,10 @@ customElements.define('time-app',
         } else {
           this.displayTimer()
         }
+      })
+
+      this.#timeListComponent.addEventListener('clear', (e) => {
+        this.#timerFormComponent.clearSavedTimesArray()
       })
     }
 

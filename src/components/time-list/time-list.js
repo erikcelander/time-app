@@ -37,10 +37,42 @@ template.innerHTML = `
       padding: 10px;
     }
 
+    .span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clear-btn {
+      width: 75%;
+      height: 50px;
+      background-color: #333;
+      color: #f1f1f1;
+      border: none;
+      border-radius: 10px;
+      font-size: 24px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .clear-btn:hover {
+      background-color: #f1f1f1;
+      color: #333;
+      
+    }
+
+    .hidden {
+      display: none;
+    }
+
   </style>
 
-
+<span class="span">
   <div class="box">
+    <div class="no-times hidden">
+      No saved times
+    </div>
     <table class="table">
       <thead>
         <th>Title</th>
@@ -50,8 +82,10 @@ template.innerHTML = `
 
 
     </table>
-
   </div>
+  <button class="clear-btn">Clear</button>
+</span>
+  
 
 `
 
@@ -62,7 +96,8 @@ customElements.define('time-list',
     #table
     #times
     #thead
-   
+    #clear
+    #noTimes
 
     constructor () {
       super()
@@ -72,6 +107,18 @@ customElements.define('time-list',
       this.#times = []
       this.#table = this.shadowRoot.querySelector('.table')
       this.#thead = this.shadowRoot.querySelector('thead')
+      this.#clear = this.shadowRoot.querySelector('.clear-btn')
+      this.#noTimes = this.shadowRoot.querySelector('.no-times')
+
+      this.#clear.addEventListener('click', () => {
+        if (window.localStorage.getItem('savedTrackedTimes') !== null) {
+          if (window.confirm('Are you sure you want to clear all saved times?')) {
+            window.localStorage.removeItem('savedTrackedTimes')
+          }
+        }
+        this.render()
+        this.dispatchEvent(new CustomEvent('clear'))
+      })
       
       this.render()
 
@@ -79,6 +126,7 @@ customElements.define('time-list',
     }
 
     render () {
+
       while (this.#thead.nextElementSibling) {
         this.#thead.nextElementSibling.remove()
       }
@@ -87,6 +135,10 @@ customElements.define('time-list',
   
   
       if (this.#times !== null) {
+        this.#table.classList.remove('hidden')
+        this.#clear.classList.remove('hidden')
+        this.#noTimes.classList.add('hidden')
+
 
         this.#times.forEach(time => {
           const cells = this.createTableCells(time)
@@ -94,6 +146,10 @@ customElements.define('time-list',
 
           this.#table.appendChild(timeRow)
         })
+      } else {
+        this.#table.classList.add('hidden')
+        this.#clear.classList.add('hidden')
+        this.#noTimes.classList.remove('hidden')
       }
     }
 

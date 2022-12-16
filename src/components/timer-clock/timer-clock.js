@@ -31,6 +31,10 @@ template.innerHTML = `
       grid-template-rows: repeat(2, minmax(50px, 2fr));
       gap: 5px;
     }
+
+    button {
+      cursor: pointer;
+    }
     
   </style>
 
