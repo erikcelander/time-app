@@ -1,4 +1,4 @@
-import Timer from '../../module/js-stopwatch-timer/src/timer.js'
+import Timer from '../../node_modules/js-stopwatch-timer/src/timer.js'
 
 /**
  * The time tracker model.
