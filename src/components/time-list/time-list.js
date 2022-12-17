@@ -1,5 +1,6 @@
-import { TrackedTime } from '../../model/tracked-time.js'
-
+/**
+ * The HTML template for the time-list component.
+ */
 const template = document.createElement('template')
 template.innerHTML = `
    <style>
@@ -85,12 +86,11 @@ template.innerHTML = `
   </div>
   <button class="clear-btn">Clear</button>
 </span>
-  
-
 `
-
+/**
+ * The time-list component.
+ */
 customElements.define('time-list',
-
   class extends HTMLElement {
   
     #table
@@ -99,6 +99,9 @@ customElements.define('time-list',
     #clear
     #noTimes
 
+    /**
+     * Creates an instance of the time-list component.
+     */
     constructor () {
       super()
       this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true))
@@ -116,8 +119,9 @@ customElements.define('time-list',
             window.localStorage.removeItem('savedTrackedTimes')
           }
         }
+  
         this.render()
-        this.dispatchEvent(new CustomEvent('clear'))
+        this.dispatchEvent(new CustomEvent('cleared'))
       })
       
       this.render()
@@ -125,8 +129,12 @@ customElements.define('time-list',
 
     }
 
+    /**
+     * Renders the time-list component with the currently available data.
+     */
     render () {
 
+      // Remove all rows except the heade, if any.
       while (this.#thead.nextElementSibling) {
         this.#thead.nextElementSibling.remove()
       }
@@ -140,12 +148,13 @@ customElements.define('time-list',
         this.#noTimes.classList.add('hidden')
 
 
+        // Create a row and data cells for each time.
         this.#times.forEach(time => {
           const cells = this.createTableCells(time)
           const timeRow = this.createTimeRow(cells)
-
           this.#table.appendChild(timeRow)
         })
+
       } else {
         this.#table.classList.add('hidden')
         this.#clear.classList.add('hidden')
@@ -153,6 +162,12 @@ customElements.define('time-list',
       }
     }
 
+    /**
+     * Creates an array of table cells for a given time.
+     * 
+     * @param {Object} time - The time to create cells for.
+     * @returns - An array of table cells.
+     */
     createTableCells(time) {
       const titleCell = document.createElement('td')
       titleCell.textContent = time.title
@@ -172,6 +187,12 @@ customElements.define('time-list',
     }
 
 
+    /**
+     * Creates a row with the given cells.
+     * 
+     * @param {Array.<HTMLTableCellElement>} cells - The cells to add to the row.
+     * @returns - The created row with the added data cells.
+     */
     createTimeRow(cells) {
       const timeRow = document.createElement('tr')
 

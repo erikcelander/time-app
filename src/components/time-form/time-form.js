@@ -1,5 +1,8 @@
 import { TrackedTime } from '../../model/tracked-time.js'
 
+/**
+ * The HTML template for the time-form component.
+ */
 const template = document.createElement('template')
 template.innerHTML = `
    <style>
@@ -11,7 +14,7 @@ template.innerHTML = `
       resize: none;
       width: 70%;
     }
-    
+
     textarea:focus {
       outline: none;
     }
@@ -52,29 +55,37 @@ template.innerHTML = `
   </div>
 `
 
+/**
+ * The time-form component.
+ */
 customElements.define('time-form',
-
   class extends HTMLElement {
 
     #container
-    #newTrackedTime
+    #form
     #textarea
+    #newTrackedTime
     #savedTimes
   
+
+    /**
+     * Creates an instance of the time-form component.
+     */
     constructor () {
       super()
       this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true))
 
       this.#container = this.shadowRoot.querySelector('.container')
+      this.#form = this.shadowRoot.querySelector('form')
       this.#textarea = this.shadowRoot.querySelector('textarea')
       this.#textarea.focus()
 
-      this.shadowRoot.querySelector('form').addEventListener('submit', e => {
+      this.#form.addEventListener('submit', (e) => {
         e.preventDefault()
         this.#submit()
       })
 
-      this.#textarea.addEventListener('keypress', e => {
+      this.#textarea.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
           this.#submit()
         }
@@ -88,17 +99,27 @@ customElements.define('time-form',
       }
     }
 
+    /**
+     * Displays the time-form component.
+     * 
+     * @param {Object} time - The tracked time to save.
+     */
     displayTimeForm (time) {
       this.#container.classList.remove('hidden')
       this.#newTrackedTime = time
     }
 
+    /**
+     * Hides the time-form component.
+     */
     hideTimeForm() {
       this.#container.classList.add('hidden')
     }
 
+    /**
+     * Saves the tracked time, its title and todays date persistently to localstorage.
+     */
     #submit = () => {
-
       if (this.#textarea.value.length > 2) {
 
         const title = this.#textarea.value
@@ -108,15 +129,16 @@ customElements.define('time-form',
         this.#savedTimes.push(trackedTime)
         window.localStorage.setItem('savedTrackedTimes', JSON.stringify(this.#savedTimes))
         this.#container.classList.add('hidden')
+
         this.#textarea.value = ''
-
-        
-
       } else {
         alert('Your title needs to be at least 3 characters.')
       } 
     }
 
+    /**
+     * Clears the array with the previously saved times.
+     */
     clearSavedTimesArray() {
       this.#savedTimes = []
     }

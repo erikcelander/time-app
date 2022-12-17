@@ -2,8 +2,9 @@ import '../timer-clock/timer-clock.js'
 import '../time-form/time-form.js'
 import '../time-list/time-list.js'
 
-
-
+/**
+ * The HTML template for the main component of the app.
+ */
 const template = document.createElement('template')
 template.innerHTML = `
    <style>
@@ -80,9 +81,10 @@ template.innerHTML = `
     </div>
   </div>
 `
-
+/**
+ * The main component of the app.
+ */
 customElements.define('time-app',
-
   class extends HTMLElement {
   
     #timerComponent
@@ -91,28 +93,29 @@ customElements.define('time-app',
     #timeListComponent
 
 
+    /**
+     * Creates an instance of the main component of the app.
+     */
     constructor () {
       super()
       this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true))
 
-      
 
       this.#timerComponent = this.shadowRoot.querySelector('.timer')
       this.#timerFormComponent = this.shadowRoot.querySelector('.form')
       this.#switchButton = this.shadowRoot.querySelector('.switch-btn')
       this.#timeListComponent = this.shadowRoot.querySelector('.time-list')
 
-      
-
       this.#timerComponent.addEventListener('saveBtnPressed', (e) => {
-        this.#timerFormComponent.displayTimeForm(e.detail)
+        const time = e.detail
+        this.#timerFormComponent.displayTimeForm(time)
       })
 
-      this.#timerComponent.addEventListener('resetBtnPressed', (e) => {
+      this.#timerComponent.addEventListener('resetBtnPressed', () => {
         this.#timerFormComponent.hideTimeForm()
       })
 
-      this.#switchButton.addEventListener('click', (e) => {
+      this.#switchButton.addEventListener('click', () => {
         if (this.#timeListComponent.classList.contains('hidden')) {
           this.displayTimeList()
         } else {
@@ -120,11 +123,14 @@ customElements.define('time-app',
         }
       })
 
-      this.#timeListComponent.addEventListener('clear', (e) => {
+      this.#timeListComponent.addEventListener('cleared', () => {
         this.#timerFormComponent.clearSavedTimesArray()
       })
     }
 
+    /**
+     * Displays the time list and hides the timer component.
+     */
     displayTimeList() {
       this.#timeListComponent.render()
       this.#switchButton.textContent = 'View timer'
@@ -132,6 +138,9 @@ customElements.define('time-app',
       this.#timeListComponent.classList.remove('hidden')
     }
 
+    /**
+     * Displays the timer and hides the time list component.
+     */
     displayTimer()  {
       this.#switchButton.textContent = 'View times'
       this.#timerComponent.classList.remove('hidden')
