@@ -114,19 +114,12 @@ customElements.define('time-list',
       this.#noTimes = this.shadowRoot.querySelector('.no-times')
 
       this.#clear.addEventListener('click', () => {
-        if (window.localStorage.getItem('savedTrackedTimes') !== null) {
-          if (window.confirm('Are you sure you want to clear all saved times?')) {
-            window.localStorage.removeItem('savedTrackedTimes')
-          }
-        }
-  
+        window.localStorage.removeItem('savedTrackedTimes')
+
         this.render()
-        this.dispatchEvent(new CustomEvent('cleared'))
       })
       
       this.render()
-
-
     }
 
     /**
@@ -134,23 +127,19 @@ customElements.define('time-list',
      */
     render () {
 
-      // Remove all rows except the heade, if any.
       while (this.#thead.nextElementSibling) {
         this.#thead.nextElementSibling.remove()
       }
 
       this.#times = JSON.parse(window.localStorage.getItem('savedTrackedTimes'))
   
-  
       if (this.#times !== null) {
         this.#table.classList.remove('hidden')
         this.#clear.classList.remove('hidden')
         this.#noTimes.classList.add('hidden')
 
-
-        // Create a row and data cells for each time.
         this.#times.forEach(time => {
-          const cells = this.createTableCells(time)
+          const cells = this.createTableCellsWithData(time)
           const timeRow = this.createTimeRow(cells)
           this.#table.appendChild(timeRow)
         })
@@ -168,9 +157,10 @@ customElements.define('time-list',
      * @param {Object} time - The time to create cells for.
      * @returns - An array of table cells.
      */
-    createTableCells(time) {
+    createTableCellsWithData (time) {
       const titleCell = document.createElement('td')
       titleCell.textContent = time.title
+      
       const durationCell = document.createElement('td')
       if (time.duration.minutes === 0) {
         durationCell.textContent = `${time.duration.seconds}s`

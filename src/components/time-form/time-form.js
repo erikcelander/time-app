@@ -48,7 +48,7 @@ template.innerHTML = `
     <form >
       <div class="text"><p>Pick a title</p></div>
       <div class="input-div">
-        <textarea rows="1" spellcheck="false"> </textarea>
+        <textarea rows="1" spellcheck="false"></textarea>
         <input type="submit" value="Submit" class="submit">
       </div>
     </form>
@@ -81,13 +81,22 @@ customElements.define('time-form',
       this.#textarea.focus()
 
       this.#form.addEventListener('submit', (e) => {
-        e.preventDefault()
-        this.#submit()
+        try {
+          e.preventDefault()
+          this.#submit()
+        } catch (error) {
+          alert(error.message)
+        }
       })
 
       this.#textarea.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-          this.#submit()
+          e.preventDefault()
+          try {
+            this.#submit()
+          } catch (error) {
+            alert(error.message)
+          }
         }
       })
 
@@ -100,9 +109,9 @@ customElements.define('time-form',
     }
 
     /**
-     * Displays the time-form component.
+     * Displays the time-form component for a given time.
      * 
-     * @param {Object} time - The tracked time to save.
+     * @param {Object} time - The time to save with time-form.
      */
     displayTimeForm (time) {
       this.#container.classList.remove('hidden')
@@ -132,7 +141,7 @@ customElements.define('time-form',
 
         this.#textarea.value = ''
       } else {
-        alert('Your title needs to be at least 3 characters.')
+        throw new RangeError('Your title needs to be at least 3 characters.')
       } 
     }
 

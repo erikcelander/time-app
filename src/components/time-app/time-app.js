@@ -136,6 +136,7 @@ customElements.define('time-app',
       this.#switchButton.textContent = 'View timer'
       this.#timerComponent.classList.add('hidden')
       this.#timeListComponent.classList.remove('hidden')
+      this.#timerFormComponent.hideTimeForm()
     }
 
     /**
